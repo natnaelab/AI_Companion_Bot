@@ -2,6 +2,8 @@
 
 ### A Telegram bot interface for AI models available for free via Cloudflare [Workers AI](https://developers.cloudflare.com/workers-ai/) API.
 
+![App Preview](preview.png)
+
 ## Setup
 
 ### Cloudflare Workers AI
