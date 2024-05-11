@@ -35,21 +35,22 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
 
 async def start(update: Update, _):
     """Handler for /start command"""
-    await update.message.reply_text("Hi!")
+    text = """👋 Hi there!
+
+Feel free to send me any text messages, and I'll do my best to respond. You can also use the <code>/imagine</code> command followed by a prompt to generate images, or send me voice messages to chat.
+"""
+    await update.message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 async def chat(update: Update, _):
     """Handler for all text messages."""
     await update.message.reply_chat_action(ChatAction.TYPING)
 
-    text = ""
     try:
         response = await llama2_7b_chat_fp16(update.message.text)
         text = response.get("result", {}).get("response", "Something went wrong...")
     except Exception as e:
-        return await update.message.reply_text(
-            str(e), reply_to_message_id=update.message.message_id
-        )
+        text = str(e)
 
     await update.message.reply_text(text, reply_to_message_id=update.message.message_id)
 
